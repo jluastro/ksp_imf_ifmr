@@ -1,0 +1,500 @@
+% useltp_ksp_1.3.sty -- US ELT Key Science Program Description Document form.
+
+% First, identifying information about this style file.
+
+\def\revtex@ver{1.3}		% Version number of this file.
+\def\revtex@date{1 Nov 2018}	% Revision date.
+\def\revtex@author{DJB/CDB/MED}	% This file's author.
+\def\revtex@org{NOAO-USELTP}		% Sponsoring organization.
+\def\revtex@genre{KSP Description Document}	% Document "type".
+
+% \ifundefined sequence
+\def\ifundefined#1{\expandafter\ifx\csname#1\endcsname\relax}
+
+% maximum number of Co-Investigators to print.
+% can be changed in form, e.g. \setmaxnumcois{10}
+\newcount\maxnumcois \maxnumcois=50
+\def\setmaxnumcois#1{\gdef\maxnumcois{#1}}
+
+\usepackage{graphicx}
+
+\def\revtex@pageid{\xdef\@thefnmark{\null}
+    \@footnotetext{\revtex@org\space
+    \revtex@genre\space \LaTeX\ macros v\revtex@ver.}}
+
+\let\ltx@enddoc=\enddocument
+\def\enddocument{\vfill\revtex@pageid\ltx@enddoc}
+
+% Page design/layout macros.  Page sizes are at the end of the file.
+
+\def\baselinestretch{0.98}	% Tighten up baselines a little.
+
+\def\ps@kpprophead{\def\@oddfoot{}\def\@evenfoot{}
+    \def\@oddhead{\hbox to\textwidth{\small\sl \prop@phead
+	\ifx\@empty\@rcptdate\phantom{, received Dec 31 1999}
+        \else, received \@rcptdate\fi
+	\hfill Page \thepage
+        \hfill \prop@pidbox}}\let\@evenhead\@oddhead
+    \def\chaptermark##1{\markright {{\ifnum \c@secnumdepth>\m@ne
+	\@chapapp\ \thechapter. \ \fi ##1}}}}
+
+
+\def\prop@idbox{ \ifx\@empty\@propid{
+	\hfill\phantom{\framebox[1.5in][c]{\LARGE\bf/}}
+    }\else{
+	\hfill\framebox[1.5in][c]{\LARGE\bf \@propid}
+    }\fi
+}
+
+\def\logo@box{
+	\includegraphics[height=47mm]{USELTP_KSP_header_crop.pdf}
+}
+
+\def\prop@pidbox{ \ifx\@empty\@propid{
+	\hfill\framebox[1.0in][c]{{\small\sl\ Draft}
+        \phantom{\large\bf/}}
+    }\else{
+	\hfill\framebox[1.0in][c]{\large\bf \@propid}
+    }\fi
+}
+
+\def\prop@info{\begin{tabbing}
+    % first line
+    \hbox to \textwidth{\logo@box}
+    % \hbox to.34\textwidth{\logo@box\phantom{\large\bf\prop@head}\hfill}%
+    % \hbox to.30\textwidth{%
+    % 	\ifx\@proposaltype\@empty{\hfill}%
+    % 	\else{\hfill{\it \@proposaltype\ proposal}\hfill}\fi}%
+    % \hbox to.36\textwidth{%
+    %     {\bf Panel:} \hspace{0.21in} 
+    %	\ifx\@panelassignment\@empty{\instruct@font For office use.}%
+    %	\else{\@panelassignment}\fi%
+    %	\hfill}%
+    \\
+
+    % second line
+    \hbox to.34\textwidth{%
+	\ifx\@rcptdate\@empty{\it Date:\/} \today%
+	\else{Date received:} \@rcptdate\fi\hfill}%
+%    \hbox to.30\textwidth{%
+%    	\ifx\@thesis\@thesistrue{\hfill{\it Thesis}\hfill}%
+%	\else{\hfill}\fi}%
+%    \hbox to.36\textwidth{{\bf Category:} \@sciencecategory\hfill}%
+    \hbox to.66\textwidth{{\bf Category:} \@sciencecategory\hfill}%
+\end{tabbing}}
+
+
+\def\ques@font{\it}
+\def\instruct@font{\small\sl}
+
+% Proposal ID and receipt date will be filled in at NOAO.
+%
+%    \proposalid{NUMBER}
+%    \received{DATE}
+
+\def\received#1{\gdef\@rcptdate{#1}} \received{}
+\def\proposalid#1{\gdef\@propid{#1}} \proposalid{}
+\def\pastid#1{\gdef\@oldpropid{#1}} \pastid{}
+\def\observatory#1{\gdef\@observatory{#1}} \observatory{}
+\def\proposaltype#1{\gdef\@proposaltype{#1}} \proposaltype{}
+\def\thesis#1{\gdef\@thesis{#1}} \thesis{}
+\def\sciencecategory#1{\gdef\@sciencecategory{#1}} \sciencecategory{}
+\def\sciencecategorynum#1{\gdef\@sciencecategorynum{#1}} \sciencecategorynum{}
+\def\panelassignment#1{\gdef\@panelassignment{#1}} \panelassignment{}
+
+% Below is the markup that the observing team needs to supply.
+% Instructions for filling in the form using these commands are in
+% a template proposal form file as LaTeX comments.
+
+\def\prop@head{U.S. ELT Key Science Program Description Document}
+\def\prop@phead{U.S. ELT Key Science Program}
+
+\def\title#1{
+%    \vspace*{-6\headheight}\prop@oldidbox  \prop@idbox
+%    \vspace*{-30mm}\logo@box \prop@idbox
+    \vspace*{-6\headheight}  \prop@idbox
+    \vspace*{5mm}
+    \prop@info\par
+    \vspace*{0.1in}
+    \def\@savetitle{#1}\ifx\@empty\@savetitle
+    \makebox[\textwidth]{\Large{\bf TITLE:} \hrulefill}\par
+    \makebox[\textwidth]{\hrulefill}\par
+    \else{\LARGE\bf\@savetitle}\fi
+}
+    
+
+\def\abstract{\par\vspace{10ex}\vbox to2.50in\bgroup\noindent
+{\bf Abstract of Scientific Justification}\\
+\parindent\z@}
+\let\ltx@endabstract=\endabstract
+\def\endabstract{\ltx@endabstract\vfil\egroup\vspace{\fill}}
+
+% Observer identification.  These items are buffered so that they can be
+% specified in any order, subject only to the restriction that the observer
+% name be given first.  The same commands are used to identify the PI as
+% well as the co-investigators; the formatting is controlled separately,
+% and differences arise in the use of LaTeX environments, below.
+%
+% Each member of the observing team is identified with several bits of
+% information.
+%
+%    \name{OBSERVER NAME}
+%    \affil{AFFILIATION}
+%    \address{POSTAL ADDRESS}
+%    \email{EMAIL ADDRESS}
+%    \phone{TELEPHONE NUMBER}
+%    \fax{FAX NUMBER}
+%    \invstatus{P, T, G, U, or O}
+%
+% Note that the fax number does not print on the form.  There is not
+% enough room on the cover page the way it is currently laid out.
+
+\def\name#1{\gdef\obs@name{#1}}
+\def\affil#1{\gdef\obs@affil{#1}}
+\def\department#1{\gdef\obs@department{#1}}
+\def\address#1{\gdef\obs@address{#1}}
+\def\citycode#1{\gdef\obs@citycode{#1}}
+\def\city#1{\gdef\obs@city{#1}}
+\def\state#1{\gdef\obs@state{#1}}
+\def\zipcode#1{\gdef\obs@zipcode{#1}}
+\def\country#1{\gdef\obs@country{#1}}
+\def\email#1{\gdef\obs@email{#1}}
+\def\phone#1{\gdef\obs@phone{#1}}
+\def\fax#1{\gdef\obs@fax{#1}}
+\def\invstatus#1{\gdef\obs@invstatus{#1}}
+
+\def\clear@obs{	\gdef\obs@name{} \gdef\obs@affil{} \gdef\obs@department{}
+		\gdef\obs@address{} \gdef\obs@citycode{} \gdef\obs@city{} 
+		\gdef\obs@state{} \gdef\obs@zipcode{} \gdef\obs@country{} 
+		\gdef\obs@email{}  \gdef\obs@phone{}
+		\gdef\obs@fax{} \gdef\obs@invstatus{} }
+
+% Formatting of PI and CO-I data are controlled by the next two macros.
+
+\def\yn@rule{\rule{0.3in}{0.4pt}}
+
+
+\def\prt@invline{
+    % \hbox to.3333\textwidth{\obs@tag\space%
+    \hbox to.3333\textwidth{
+	\ifx\@empty\obs@name\hrulefill\space\else\obs@name\hfill\fi}%
+    \hbox to.3333\textwidth{{}\space%
+	\ifx\@empty\obs@affil\hrulefill\else\obs@affil\hfill\fi}
+    \hbox to.3333\textwidth{{}\space%
+	\ifx\@empty\obs@affil\hrulefill\else\obs@email\hfill\fi}
+}
+
+\def\prt@coiblock{\vspace*{0.1cm}\begin{tabbing}\prt@invline\end{tabbing}}
+
+% Team Member environments.
+
+\newcounter{coi}
+
+\newenvironment{team_member}{\clear@obs\stepcounter{coi}}{\ifnum\c@coi>\maxnumcois
+   \prt@xcoiblock\else\vspace*{-6.3ex}\prt@coiblock\fi}
+
+\def\chk@setblank#1{\def\@kptmpa{#1}\ifx\@empty\@kptmpa
+    \def\@kptmpa{\yn@rule}\fi\mbox{\@kptmpa}}
+
+\def\chk@setblankline#1{\def\@kptmpa{#1}\ifx\@empty\@kptmpa
+    \def\@kptmpa{\rule{\textwidth}{0.4pt}}\fi
+    \par\makebox[\textwidth][l]{\@kptmpa}}
+
+
+\def\undates@head {{\bf Scheduling constraints and non-usable dates} %
+{\it (up to four lines).}}
+
+\def\unusabledates#1{\undates@head\par\def\@kptmpa{#1}
+    \ifx\@empty\@kptmpa{\par
+	\makebox[\textwidth]{\hrulefill}
+	\makebox[\textwidth]{\hrulefill}
+	\makebox[\textwidth]{\hrulefill}
+	\makebox[\textwidth]{\hrulefill}\par}
+    \else{
+	\@kptmpa
+    }\fi
+}
+
+
+
+\def\ra@head {{\par\bf R.A. range of principal targets (hours): }}
+\def\dec@head {{\par\bf Dec. range of principal targets (degrees): }}
+%\def\pid@head {{\par\bf Previous ID of this observing proposal: }}
+
+\def\targetsra#1{\ra@head #1}
+\def\targetsdec#1{\dec@head #1}
+
+\def\pp@head {{\par\bf Proprietary Period: }}
+\def\proprietaryperiod#1{\pp@head #1}
+
+
+% Observing run environment.  This is used to describe observing parameters
+% in a very succinct manner, to be presented in an abbreviated form on the
+% first page.  I have chosen to use multiple \begin{obsrun}-\end{obsrun}
+% groupings, as opposed to a repeating set of parameter identifying macros.
+
+\newcounter{obsrun}
+\newenvironment{obsrun}{\stepcounter{obsrun}}%
+    {\ifnum\c@obsrun=6\par\prt@obsruns\par\fi}
+
+% The scientific justification and the proposed observing program are
+% typeset (printed) as they are specified by the author.  Specific
+% observations are summarized in the "obsrun" environment (above).
+%
+%    \sciencejustification
+%    \expdesign
+%    \otherfacilities
+%    \manplan
+
+\newenvironment{references}{\subsubsection*{References}}{\relax}
+\let\reference=\par
+
+\def\propsection{\@startsection{section}{1}{\z@}
+    {7pt plus 4pt minus 2pt}{-1em}{\normalsize\bf}}
+\def\subsection{\@startsection{subsection}{2}{\z@}
+    {-3.25ex plus -1ex minus -.2ex}{1.5ex plus .2ex}{\normalsize\bf}}
+
+\def\team@head{{\instruct@font 
+List the names, affiliations and e-mail addresss for all team members.\\
+\vspace{0.5cm}
+\par}}
+
+% Scientific Justification (\sciencejustification)
+
+\def\justif@head{{\instruct@font
+Describe the scientific context for this Key Science Program, the specific research question(s) to be addressed, and the overall significance to astronomy.  The Scientific Justification should be limited to 4 pages including figures.
+\par}}
+
+% Telescopes and Instruments (\telinstreq)
+
+\def\telinst@head{{\instruct@font\hspace{0.2cm}
+Discuss the program requirements for the telescope(s) (GMT and/or TMT), instrumentation, and adaptive optics systems.  Use of both TMT and GMT in an integrative fashion merits particular attention.  If the program can be carried out using instruments planned for the GMT/TMT early-light suites, discuss what particular capabilities (e.g., spectral resolution, angular resolution, AO performance, etc.) are required.  If new capabilities beyond the defined early-light instruments are needed, describe the requirements in a suitable level of detail.
+\par}}
+
+% Experimental Design (\expdesign)
+
+\def\feas@head{{\instruct@font\hspace{0.2cm}
+Describe the details of the observational program, including:
+ $\bullet$ Target/sample selection.  This may be a description of a target selection strategy that would be appropriate in the future when the project would be executed. Specific targets may be specified, particularly if they demonstrate the value of a 2-telescope, 2-hemisphere system.
+ $\bullet$ A description of the required observations.
+ $\bullet$ Signal-to-noise requirements and exposure time estimates.  Because the detailed parameters of future instruments may not be precisely known now, this section should discuss the assumptions adopted.
+ $\bullet$ Special requirements for observing conditions (if appropriate), in particular with regard to image quality and adaptive optics, precipitable water vapor, or other special conditions.
+ $\bullet$ Scheduling requirements (as appropriate), including lunar phase, observing cadence, and/or timing constraints.
+\par}}
+
+% Observing Program Summary (\obssum)
+
+\def\obsprog@head{{\instruct@font 
+Summarize the overall observing program.  This should include:
+ $\bullet$ A high-level review of the program as it would be executed, potentially over several years,
+   including the sequence of observations if relevant.
+ $\bullet$ The total observing time required for each telescope, instrument, and instrument mode used,
+   based on the detailed information from the Experimental Design.
+\par}}
+
+% Legacy Value (\legacyvalue)
+
+\def\lv@head{{\instruct@font
+Discuss the legacy value of these observations and the data they would generate for the broader scientific community, including a description of potential data products and the ancillary science that might be enabled by this dataset.
+}\par}
+
+% Analysis Plan (\analysisplan)
+
+\def\ap@head{{\instruct@font
+Describe the program requirements for data analysis and interpretation.  This may include: 
+$\bullet$ Data management and software needed for data reduction and analysis. 
+$\bullet$ Simulations needed to interpret the data. 
+$\bullet$ Other resources (e.g., computational, user support) that may be necessary.
+}\par}
+
+
+\def\ofac@head{{\instruct@font
+If relevant, describe how the proposed TMT/GMT observations complement data from other facilities. This may include: 
+ $\bullet$ Required coordination between the proposed GMT/TMT program and observations or data resources from other facilities in space or on the ground. 
+ $\bullet$ Preparatory or ancillary datasets that will be required to carry out this Key Science Program.
+\par}}
+
+\def\teammembers{\newpage\propsection{\fbox{Team Members}}\team@head}
+\def\sciencejustification{\newpage\propsection{\fbox{Scientific Justification}}\justif@head}
+\def\telinstreq{\newpage\propsection{\fbox{Telescopes and Instruments}\telinst@head}}
+\def\expdesign{\propsection{\fbox{Experimental Design}\feas@head}}
+\def\obssum{\propsection{\fbox{Observing Program Summary}}\obsprog@head}
+% \def\telinstreq{\newpage\propsection{\fbox{Telescopes and Instruments}\telinst@head}}
+% \def\expdesign{\newpage\propsection{\fbox{Experimental Design}}\feas@head}
+% \def\sexpdesign{\newpage\propsection{\fbox{Experimental Design}}\sfeas@head}
+% \def\obssum{\newpage\propsection{\fbox{Observing Program Summary}}\obsprog@head}
+\def\otherfacilities{\vfill\propsection{\fbox{Synergy with Other Facilities or Resources}}\ofac@head}
+\def\analysisplan{\vfill\propsection{\fbox{Analysis Plan}}\ap@head}
+\def\legacyvalue{\vfill\propsection{\fbox{Legacy Value}}\lv@head}
+% \def\manplan{\propsection{\fbox{Management Plan}}\mplan@head}
+% \def\longtermdetails{\vfill\propsection{\fbox{Long-term Details}}\ltd@head}
+% \def\dataaccess{\vfill\propsection{\fbox{Release of Data}}\dataacc@head}
+% \def\specialrequest{\propsection{\fbox{Special Instrument and Program Requirements}}\specreq@head}
+\def\technicaldescription{\propsection{\fbox{Technical Description}}\techjust@head}
+
+\def\relatedwork#1{\fbox{$\star$}\space#1}
+
+
+
+%  ****************************************
+%  *           EPS INCLUSIONS             *
+%  ****************************************
+
+% Include Rokicki's epsf.sty file explicitly.
+
+\@ifundefined{epsfbox}{\input{epsf.sty}}{\relax}
+
+% Simplified EPS inclusion macros so we can see how this goes...
+% These are layered on Rokicki's dvips material, and are dependent
+% on the author's use of that DVI driver.
+%
+%    \plotone{EPSFILE}
+%    \plottwo{EPSFILE}{EPSFILE}
+%    \plotfiddle{EPSFILE}{VSIZE}{ROT}{HSF}{VSF}{HTRANS}{VTRANS}
+%
+% \plotone inserts the plot in a space that is \columnwidth wide; the
+% plot is scaled so the horizontal dimension fits in the text width,
+% and the vertical dimension is scaled to maintain the aspect ratio.
+% \plottwo inserts two plots next to each other in one \columnwidth,
+% sort of like "two-up" mode.
+%
+%    EPSFILE    name of file with EPS
+%
+% The following arguments are for the \plotfiddle macro which formats
+% the \special itself, prepares vspace, etc.  This completely bypasses
+% Rokicki's macros that attempt to rationalize the EPS BoundingBox with
+% the LaTeX page dimensions.
+%
+%    VSIZE      vertical white space to allow for plot
+%    ROT        rotation angle
+%    HSF        horiz scale factor
+%    VSF        vert scale factor
+%    HTRANS     horiz translation
+%    VTRANS     vert translation
+
+%\epsfverbosetrue
+
+\def\eps@scaling{.95}
+\def\epsscale#1{\gdef\eps@scaling{#1}}
+
+\def\plotone#1{\centering \leavevmode
+    \epsfxsize=\eps@scaling\columnwidth \epsfbox{#1}}
+
+\def\plottwo#1#2{\centering \leavevmode
+    \epsfxsize=.45\columnwidth \epsfbox{#1} \hfil
+    \epsfxsize=.45\columnwidth \epsfbox{#2}}
+
+\def\plotfiddle#1#2#3#4#5#6#7{\centering \leavevmode
+    \vbox to#2{\rule{0pt}{#2}}
+    \special{psfile=#1 voffset=#7 hoffset=#6 vscale=#5 hscale=#4 angle=#3}}
+
+% Conveniences - compatible with AASTeX v4.0.
+
+\def\deg{\hbox{$^\circ$}}
+\def\sun{\hbox{$\odot$}}
+\def\earth{\hbox{$\oplus$}}
+\def\lesssim{\mathrel{\hbox{\rlap{\hbox{\lower4pt\hbox{$\sim$}}}\hbox{$<$}}}}
+\def\gtrsim{\mathrel{\hbox{\rlap{\hbox{\lower4pt\hbox{$\sim$}}}\hbox{$>$}}}}
+\def\sq{\hbox{\rlap{$\sqcap$}$\sqcup$}}
+\def\arcdeg{\hbox{$^\circ$}}
+\def\arcmin{\hbox{$^\prime$}}
+\def\arcsec{\hbox{$^{\prime\prime}$}}
+\def\fd{\hbox{$.\!\!^{\rm d}$}}
+\def\fh{\hbox{$.\!\!^{\rm h}$}}
+\def\fm{\hbox{$.\!\!^{\rm m}$}}
+\def\fs{\hbox{$.\!\!^{\rm s}$}}
+\def\fdg{\hbox{$.\!\!^\circ$}}
+\def\farcm{\hbox{$.\mkern-4mu^\prime$}}
+\def\farcs{\hbox{$.\!\!^{\prime\prime}$}}
+\def\fp{\hbox{$.\!\!^{\scriptscriptstyle\rm p}$}}
+\def\micron{\hbox{$\mu$m}}
+\let\la=\lesssim			% For Springer A&A compliance...
+\let\ga=\gtrsim
+\def\case#1#2{\hbox{$\frac{#1}{#2}$}}
+\def\slantfrac#1#2{\hbox{$\,^#1\!/_#2$}}
+\def\onehalf{\slantfrac{1}{2}}
+\def\onethird{\slantfrac{1}{3}}
+\def\twothirds{\slantfrac{2}{3}}
+\def\onequarter{\slantfrac{1}{4}}
+\def\threequarters{\slantfrac{3}{4}}
+\def\ubvr{\hbox{$U\!BV\!R$}}            
+\def\ub{\hbox{$U\!-\!B$}}               
+\def\bv{\hbox{$B\!-\!V$}}               
+\def\vr{\hbox{$V\!-\!R$}}               
+\def\ur{\hbox{$U\!-\!R$}}
+\def\ion#1#2{#1$\;${\small\rm\@Roman{#2}}\relax}
+
+\let\jnl@style=\rm
+\def\ref@jnl#1{{\jnl@style#1}}
+\def\aj{\ref@jnl{AJ}}                   
+\def\araa{\ref@jnl{ARA\&A}}             
+\def\apj{\ref@jnl{ApJ}}                 
+\def\apjl{\ref@jnl{ApJ}}                
+\def\apjs{\ref@jnl{ApJS}}               
+\def\ao{\ref@jnl{Appl.~Opt.}}           
+\def\apss{\ref@jnl{Ap\&SS}}             
+\def\aap{\ref@jnl{A\&A}}                
+\def\aapr{\ref@jnl{A\&A~Rev.}}          
+\def\aaps{\ref@jnl{A\&AS}}              
+\def\azh{\ref@jnl{AZh}}                 
+\def\baas{\ref@jnl{BAAS}}               
+\def\jrasc{\ref@jnl{JRASC}}             
+\def\memras{\ref@jnl{MmRAS}}            
+\def\mnras{\ref@jnl{MNRAS}}             
+\def\pra{\ref@jnl{Phys.~Rev.~A}}        
+\def\prb{\ref@jnl{Phys.~Rev.~B}}        
+\def\prc{\ref@jnl{Phys.~Rev.~C}}        
+\def\prd{\ref@jnl{Phys.~Rev.~D}}        
+\def\pre{\ref@jnl{Phys.~Rev.~E}}        
+\def\prl{\ref@jnl{Phys.~Rev.~Lett.}}    
+\def\pasp{\ref@jnl{PASP}}               
+\def\pasj{\ref@jnl{PASJ}}               
+\def\qjras{\ref@jnl{QJRAS}}             
+\def\skytel{\ref@jnl{S\&T}}             
+\def\solphys{\ref@jnl{Sol.~Phys.}}      
+\def\sovast{\ref@jnl{Soviet~Ast.}}      
+\def\ssr{\ref@jnl{Space~Sci.~Rev.}}     
+\def\zap{\ref@jnl{ZAp}}                 
+\def\nat{\ref@jnl{Nature}}              
+\def\iaucirc{\ref@jnl{IAU~Circ.}}
+\def\aplett{\ref@jnl{Astrophys.~Lett.}}
+\def\apspr{\ref@jnl{Astrophys.~Space~Phys.~Res.}}
+\def\bain{\ref@jnl{Bull.~Astron.~Inst.~Netherlands}}
+\def\fcp{\ref@jnl{Fund.~Cosmic~Phys.}}
+\def\gca{\ref@jnl{Geochim.~Cosmochim.~Acta}}
+\def\grl{\ref@jnl{Geophys.~Res.~Lett.}}
+\def\jcp{\ref@jnl{J.~Chem.~Phys.}}      
+\def\jgr{\ref@jnl{J.~Geophys.~Res.}}    
+\def\jqsrt{\ref@jnl{J.~Quant.~Spec.~Radiat.~Transf.}}
+\def\memsai{\ref@jnl{Mem.~Soc.~Astron.~Italiana}}
+\def\nphysa{\ref@jnl{Nucl.~Phys.~A}}
+\def\physrep{\ref@jnl{Phys.~Rep.}}
+\def\physscr{\ref@jnl{Phys.~Scr}}
+\def\planss{\ref@jnl{Planet.~Space~Sci.}}
+\def\procspie{\ref@jnl{Proc.~SPIE}}
+\let\astap=\aap
+\let\apjlett=\apjl
+\let\apjsupp=\apjs
+\let\applopt=\ao
+
+% Initialization.
+
+\textwidth 6.5in
+\textheight 9.0in
+\oddsidemargin \z@
+\evensidemargin \z@
+\topmargin \z@
+\headheight .2in
+\headsep .2in
+%\footheight \z@
+\parindent \z@
+%\parskip 1ex
+\addtolength{\parskip}{1 ex}
+
+\voffset=-0.25in
+%\hoffset=-0.25in
+
+\ps@kpprophead
+\setcounter{secnumdepth}{0}
+
+\thispagestyle{empty}
